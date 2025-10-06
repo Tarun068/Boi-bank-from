@@ -201,20 +201,281 @@ const DateInput = ({ value, onChange, w = "100%" }) => {
 /* -------- Demo data -------- */
 const data1 = [
   {
+    "Beneficiary name": "SUNIL HARISHANKAR PRAJAPATI",
+    "Account number": "206210110015211",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHIL KAPOOR",
+    "Account number": "206210110002242",
+  },
+  {
     "Beneficiary name": "VARUN HIREN KAPOOR",
     "Account number": "206210110013737",
+  },
+  {
+    "Beneficiary name": "PRIYA HIREN KAPOOR",
+    "Account number": "206210110002100",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHIL KAPOOR HUF",
+    "Account number": "206210110008093",
+  },
+  {
+    "Beneficiary name": "AMAN SADHVANI",
+    "Account number": "206210110016789",
+  },
+  {
+    "Beneficiary name": "SONIYA SHIVKUMAR TADAKE",
+    "Account number": "206216510000063",
+  },
+  {
+    "Beneficiary name": "MAHEK HIREN KAPOOR",
+    "Account number": "206210110016036",
+  },
+  {
+    "Beneficiary name": "DHRUV MAHENDRAKUMAR PRAJAPATI",
+    "Account number": "206810110016225",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHIL KAPOOR",
+    "Account number": "206227210000033",
   },
 ];
 
 const data2 = [
   {
-    "Beneficiary name": "Prajapati sunil",
-    "Account number": "206210110015211",
-    "Branch Name": "Kubernagar",
+    "Beneficiary name": "VARUN HIREN KAPOOR",
+    "Account number": "84050100028221",
+    "Branch Name": "KUBERNAGAR",
     "account type": "savings",
-    Center: "ahmedabad",
-    Bank: "Bank of india",
-    "IFS Code No": "BKID0002062",
+    Center: "AHMEDABAD",
+    Bank: "BANK OF BARODA",
+    "IFS Code No": "BARB0DBKUBE",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHIL KAPOOR",
+    "Account number": "89970100001243",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "BANK OF BARODA",
+    "IFS Code No": "BARB0DBKUBE",
+  },
+  {
+    "Beneficiary name": "MAHEK HIREN KAPOOR",
+    "Account number": "84050100026881",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "BANK OF BARODA",
+    "IFS Code No": "BARB0DBKUBE",
+  },
+  {
+    "Beneficiary name": "HITENDRA KAUSHIK PARMAR",
+    "Account number": "919010001008120",
+    "Branch Name": "KANJUMARG EAST",
+    "account type": "savings",
+    Center: "MUMBAI",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0004166",
+  },
+  {
+    "Beneficiary name": "MEGHA KAUSHIK PARMAR",
+    "Account number": "5870137117",
+    "Branch Name": "TIMES SQUARE BR MUM MH",
+    "account type": "savings",
+    Center: "MUMBAI",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0005115",
+  },
+  {
+    "Beneficiary name": "MUNIBEN PRAJAPATI",
+    "Account number": "925010029882093",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
+  {
+    "Beneficiary name": "DIGVIJAY CHAVADA",
+    "Account number": "925010037615724",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
+  {
+    "Beneficiary name": "ADITYA UPADHYAY",
+    "Account number": "925010038277743",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
+  {
+    "Beneficiary name": "GUPTA  ABHISHEK",
+    "Account number": "925010039295201",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
+  {
+    "Beneficiary name": "ABBI ABHISHEK",
+    "Account number": "924010075287838",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
+  {
+    "Beneficiary name": "ABBI PUNAM",
+    "Account number": "925010003039628",
+    "Branch Name": "OLD PADRA ROAD",
+    "account type": "savings",
+    Center: "VADODARA",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0002862",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHILKUMAR KAPOOR",
+    "Account number": "919010047553831",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHIL KAPOOR",
+    "Account number": "3176936093",
+    "Branch Name": "SAIJPUR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "CENTRAL BANK OF INDIA",
+    "IFS Code No": "CBIN0280555",
+  },
+  {
+    "Beneficiary name": "PRIYA HIREN KAPOOR",
+    "Account number": "5823239684",
+    "Branch Name": "SAIJPUR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "CENTRAL BANK OF INDIA",
+    "IFS Code No": "CBIN0280555",
+  },
+  {
+    "Beneficiary name": "VARUN HIREN KAPOOR",
+    "Account number": "5823239764",
+    "Branch Name": "SAIJPUR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "CENTRAL BANK OF INDIA",
+    "IFS Code No": "CBIN0280555",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHIL KAPOOR",
+    "Account number": "5835809164",
+    "Branch Name": "SAIJPUR",
+    "account type": "overdraft",
+    Center: "AHMEDABAD",
+    Bank: "CENTRAL BANK OF INDIA",
+    "IFS Code No": "CBIN0280555",
+  },
+  {
+    "Beneficiary name": "HIREN SUSHIL KAPOOR",
+    "Account number": "5761277889",
+    "Branch Name": "SAIJPUR",
+    "account type": "overdraft",
+    Center: "AHMEDABAD",
+    Bank: "CENTRAL BANK OF INDIA",
+    "IFS Code No": "CBIN0280555",
+  },
+  {
+    "Beneficiary name": "VARUN HIREN KAPOOR",
+    "Account number": "5835801675",
+    "Branch Name": "SAIJPUR",
+    "account type": "overdraft",
+    Center: "AHMEDABAD",
+    Bank: "CENTRAL BANK OF INDIA",
+    "IFS Code No": "CBIN0280555",
+  },
+  {
+    "Beneficiary name": "PRIYA HIREN KAPOOR",
+    "Account number": "5835806628",
+    "Branch Name": "SAIJPUR",
+    "account type": "overdraft",
+    Center: "AHMEDABAD",
+    Bank: "CENTRAL BANK OF INDIA",
+    "IFS Code No": "CBIN0280555",
+  },
+  {
+    "Beneficiary name": "MILAN THAKUR",
+    "Account number": "60501025452",
+    "Branch Name": "VESU SURAT",
+    "account type": "savings",
+    Center: "SURAT",
+    Bank: "BANK OF MAHARASHTRA",
+    "IFS Code No": "MAHB0002269",
+  },
+  {
+    "Beneficiary name": "SACHIN PRAJAPATI",
+    "Account number": "40218633520",
+    "Branch Name": "NEEM KA THANA",
+    "account type": "savings",
+    Center: "NEEM KA THANA",
+    Bank: "STATE BANK OF INDIA",
+    "IFS Code No": "SBIN0010080",
+  },
+  {
+    "Beneficiary name": "PRIYANKA PRAJAPATI",
+    "Account number": "2718000100397437",
+    "Branch Name": "NEEM KA THANA",
+    "account type": "savings",
+    Center: "NEEM KA THANA",
+    Bank: "PUNJAB NATIONAL BANK",
+    "IFS Code No": "PUNB0271800",
+  },
+  {
+    "Beneficiary name": "SONIYA MAHENDRAKUMAR PRAJAPATI",
+    "Account number": "20301913090",
+    "Branch Name": "MEGHANINAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "STATE BANK OF INDIA",
+    "IFS Code No": "SBIN0006140",
+  },
+  {
+    "Beneficiary name": "L AND T FINANCE LIMITED",
+    "Account number": "LTHLH02LP250212185511",
+    "Branch Name": "MUMBAI",
+    "account type": "current",
+    Center: "MUMBAI",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0CCH274",
+  },
+  {
+    "Beneficiary name": "KAUSHIK NAROTTAM PARMAR",
+    "Account number": "1606000301099915",
+    "Branch Name": "MUMBAI",
+    "account type": "savings",
+    Center: "MUMBAI",
+    Bank: "PUNJAB NATIONAL BANK",
+    "IFS Code No": "PUNB0160600",
+  },
+  {
+    "Beneficiary name": "BHATT TIRTH  PARASBHAI",
+    "Account number": "8848328812",
+    "Branch Name": "ISCON AMBLI ROAD",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "KOTAK MAHINDRA BANK",
+    "IFS Code No": "KKBK0002617",
   },
 ];
 
@@ -474,6 +735,58 @@ export default function BOIFormPixelPerfect() {
     setField({ [key]: v });
   };
 
+  const SearchableSelect = ({
+    options = [],
+    value,
+    onChange,
+    placeholder = "Select option",
+    w = "100%",
+    className = "",
+  }) => {
+    const [search, setSearch] = useState("");
+    const filtered = options.filter((opt) =>
+      opt.toLowerCase().includes(search.toLowerCase())
+    );
+
+    return (
+      <div className="relative w-full">
+        <input
+          value={search || value}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder={placeholder}
+          className={`h-[24px] font-bold border-b border-black outline-none bg-white ${className}`}
+          style={{ width: w }}
+          onFocus={(e) => e.target.select()}
+        />
+        {search && (
+          <div
+            className="absolute left-0 top-[100%] bg-white border border-black max-h-[150px] overflow-y-auto z-50"
+            style={{ width: w }}
+          >
+            {filtered.length ? (
+              filtered.map((opt, i) => (
+                <div
+                  key={i}
+                  className="px-2 py-[3px] text-[12px] hover:bg-gray-100 cursor-pointer"
+                  onMouseDown={() => {
+                    onChange(opt);
+                    setSearch("");
+                  }}
+                >
+                  {opt}
+                </div>
+              ))
+            ) : (
+              <div className="px-2 py-[3px] text-[12px] text-gray-500">
+                No match
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="w-full flex justify-center bg-white print:bg-white">
       <style>{`
@@ -537,19 +850,14 @@ export default function BOIFormPixelPerfect() {
             <Row className="mb-[8px]">
               <Label w={190}>1. Title of Account</Label>
               {/* Applicant Title dropdown using data1 */}
-              <select
+              <SearchableSelect
+                options={applicantNameOptions}
                 value={form.titleOfAccount}
-                onChange={handleApplicantTitleSelect}
-                className="h-[24px] font-bold border-b border-black outline-none bg-white"
-                style={{ width: "100%" }}
-              >
-                <option value="">— Select title —</option>
-                {applicantNameOptions.map((n, i) => (
-                  <option key={i} value={n}>
-                    {n}
-                  </option>
-                ))}
-              </select>
+                onChange={(val) =>
+                  handleApplicantTitleSelect({ target: { value: val } })
+                }
+                className=""
+              />
             </Row>
 
             <Row className="mb-[4px]">
@@ -562,19 +870,15 @@ export default function BOIFormPixelPerfect() {
                   }
                 />
                 {/* Add no-print here so it hides on print */}
-                <select
-                  value=""
-                  onChange={handleApplicantAccountSelect}
-                  className="no-print h-[24px] font-bold border-b border-black outline-none bg-white"
-                  style={{ width: 220 }}
-                >
-                  <option value="">— Pick from saved —</option>
-                  {applicantAccOptions.map((acc, i) => (
-                    <option key={i} value={acc}>
-                      {acc}
-                    </option>
-                  ))}
-                </select>
+                <div className="no-print" style={{ width: 220 }}>
+                  <SearchableSelect
+                    options={applicantAccOptions}
+                    value=""
+                    onChange={(val) =>
+                      handleApplicantAccountSelect({ target: { value: val } })
+                    }
+                  />
+                </div>
               </div>
             </Row>
 
@@ -614,20 +918,13 @@ export default function BOIFormPixelPerfect() {
             <Row>
               <Label w={190}>1. Beneficiary's name</Label>
               {!manualEntry ? (
-                <select
+                <SearchableSelect
+                  options={beneficiaryOptions}
                   value={form.beneficiaryName}
-                  onChange={handleBeneficiarySelect}
-                  className="h-[24px] font-bold border-b border-black outline-none bg-white"
-                  style={{ width: "100%" }}
-                >
-                  <option value="">— Select beneficiary —</option>
-                  {beneficiaryOptions.map((n, i) => (
-                    <option key={i} value={n}>
-                      {n}
-                    </option>
-                  ))}
-                  <option value="__manual__">Manual entry…</option>
-                </select>
+                  onChange={(val) =>
+                    handleBeneficiarySelect({ target: { value: val } })
+                  }
+                />
               ) : (
                 <div className="flex items-center gap-2 w-full">
                   <LineInput
@@ -658,19 +955,15 @@ export default function BOIFormPixelPerfect() {
                   onChange={(val) => setField({ accountNumber: val })}
                 />
                 {/* This dropdown hides on print */}
-                <select
-                  value=""
-                  onChange={handleBeneficiaryAccountSelect}
-                  className="no-print h-[24px] font-bold border-b border-black outline-none bg-white"
-                  style={{ width: 220 }}
-                >
-                  <option value="">— Pick from saved —</option>
-                  {accountNumberOptions.map((acc, i) => (
-                    <option key={i} value={acc}>
-                      {acc}
-                    </option>
-                  ))}
-                </select>
+                <div className="no-print" style={{ width: 130 }}>
+                  <SearchableSelect
+                    options={accountNumberOptions}
+                    value=""
+                    onChange={(val) =>
+                      handleBeneficiaryAccountSelect({ target: { value: val } })
+                    }
+                  />
+                </div>
               </div>
             </Row>
 
