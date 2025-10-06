@@ -1,6 +1,7 @@
 import React, { useRef, useState, useMemo } from "react";
 import boi from "./assets/boi.png";
 
+/* -------- Helpers: Number → Words (Indian currency) -------- */
 function numToWordsBelowThousand(n, ones, tens) {
   let str = "";
   const hundred = Math.floor(n / 100);
@@ -60,13 +61,12 @@ function numberToIndianWords(num) {
 
   if (num === 0) return "Zero";
 
-  let words = [];
-
   const crore = Math.floor(num / 10000000);
   const lakh = Math.floor((num % 10000000) / 100000);
   const thousand = Math.floor((num % 100000) / 1000);
   const hundredBelow = Math.floor(num % 1000);
 
+  const words = [];
   if (crore) words.push(numToWordsBelowThousand(crore, ones, tens) + " Crore");
   if (lakh) words.push(numToWordsBelowThousand(lakh, ones, tens) + " Lakh");
   if (thousand)
@@ -93,25 +93,7 @@ function amountToIndianCurrencyWords(input) {
   return ` ${rupeeWords} Only`;
 }
 
-const data = [
-  {
-    "Beneficiary name": "Prajapati sunil",
-    "Account number": "206210110015211",
-    "Branch Name": "Kubernagar",
-    Center: "ahmedabad",
-    Bank: "Bank of india",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "VARUN HIREN KAPOOR",
-    "Account number": "206210110013737",
-    "Branch Name": "KUBERNAGAR",
-    Center: "AHMEDABAD",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-];
-
+/* -------- UI bits -------- */
 const Row = ({ children, className = "" }) => (
   <div className={`flex items-center ${className}`}>{children}</div>
 );
@@ -122,8 +104,16 @@ const Label = ({ children, w = 190 }) => (
   </div>
 );
 
-const LineInput = ({ value, onChange, w = "100%", placeholder = "", list }) => (
+const LineInput = ({
+  value,
+  onChange,
+  w = "100%",
+  placeholder = "",
+  list,
+  type = "text",
+}) => (
   <input
+    type={type}
     placeholder={placeholder}
     value={value}
     onChange={onChange}
@@ -185,14 +175,57 @@ function DigitBoxes({
     </div>
   );
 }
+const DateInput = ({ value, onChange, w = "100%" }) => {
+  const ref = useRef(null);
 
+  const openPicker = () => {
+    // Chrome/Edge support showPicker; others will just focus
+    ref.current?.showPicker?.();
+    ref.current?.focus();
+  };
+
+  return (
+    <input
+      ref={ref}
+      type="date"
+      value={value}
+      onChange={onChange}
+      onClick={openPicker} // click anywhere on field opens picker
+      onFocus={(e) => e.target.showPicker?.()} // also open when focused
+      className="outline-none h-[22px] font-bold border-b border-black"
+      style={{ width: w }}
+    />
+  );
+};
+
+/* -------- Demo data -------- */
+const data1 = [
+  {
+    "Beneficiary name": "VARUN HIREN KAPOOR",
+    "Account number": "206210110013737",
+  },
+];
+
+const data2 = [
+  {
+    "Beneficiary name": "Prajapati sunil",
+    "Account number": "206210110015211",
+    "Branch Name": "Kubernagar",
+    "account type": "savings",
+    Center: "ahmedabad",
+    Bank: "Bank of india",
+    "IFS Code No": "BKID0002062",
+  },
+];
+
+/* -------- Main -------- */
 export default function BOIFormPixelPerfect() {
   const [form, setForm] = useState({
     remitter: "",
     titleOfAccount: "",
     applicantAccountNo: "",
     chqNo: "",
-    chqDate: "",
+    chqDate: "", // YYYY-MM-DD
     beneficiaryName: "",
     accountNumber: "",
     accountType: {
@@ -210,18 +243,22 @@ export default function BOIFormPixelPerfect() {
     total: "",
     rupeesInWords: "",
     declAmount: "",
-    date: "",
+    date: "", // YYYY-MM-DD
     mobile: "",
     debitedApplicantAc: "",
     sfmsUsersOnly: "",
-    dateOfTransfer: "",
+    dateOfTransfer: "", // YYYY-MM-DD
     sfmsTrnNo: "",
     finalUtrNo: "",
   });
 
-  const lookup = useMemo(() => {
+  const [manualEntry, setManualEntry] = useState(false); // toggle for manual beneficiary entry
+
+  /* Lookups */
+  // Applicant lookups use data1
+  const appByName = useMemo(() => {
     const map = new Map();
-    data.forEach((d) => {
+    data1.forEach((d) => {
       const key = String(d["Beneficiary name"] || "")
         .trim()
         .toLowerCase();
@@ -230,31 +267,181 @@ export default function BOIFormPixelPerfect() {
     return map;
   }, []);
 
+  const appByAccount = useMemo(() => {
+    const map = new Map();
+    data1.forEach((d) => {
+      const key = String(d["Account number"] || "").trim();
+      if (key) map.set(key, d);
+    });
+    return map;
+  }, []);
+
+  // Beneficiary lookups use data2
+  const benByName = useMemo(() => {
+    const map = new Map();
+    data2.forEach((d) => {
+      const key = String(d["Beneficiary name"] || "")
+        .trim()
+        .toLowerCase();
+      if (key) map.set(key, d);
+    });
+    return map;
+  }, []);
+
+  const benByAccount = useMemo(() => {
+    const map = new Map();
+    data2.forEach((d) => {
+      const key = String(d["Account number"] || "").trim();
+      if (key) map.set(key, d);
+    });
+    return map;
+  }, []);
+
+  /* Options */
+  // Applicant
+  const applicantNameOptions = useMemo(
+    () => data1.map((d) => d["Beneficiary name"]).filter(Boolean),
+    []
+  );
+  const applicantAccOptions = useMemo(
+    () => data1.map((d) => d["Account number"]).filter(Boolean),
+    []
+  );
+
+  // Beneficiary
   const beneficiaryOptions = useMemo(
-    () => data.map((d) => d["Beneficiary name"]).filter(Boolean),
+    () => data2.map((d) => d["Beneficiary name"]).filter(Boolean),
+    []
+  );
+  const accountNumberOptions = useMemo(
+    () => data2.map((d) => d["Account number"]).filter(Boolean),
     []
   );
 
   const setField = (patch) => setForm((prev) => ({ ...prev, ...patch }));
 
-  const handleBeneficiaryChange = (e) => {
-    const name = e.target.value;
-    setField({ beneficiaryName: name });
-    const found = lookup.get(name.trim().toLowerCase());
+  /* Applicant handlers (use data1) */
+  const handleApplicantTitleSelect = (e) => {
+    const val = e.target.value;
+    setField({ titleOfAccount: val });
+    const found = appByName.get(
+      String(val || "")
+        .trim()
+        .toLowerCase()
+    );
+    if (found) {
+      setField({
+        applicantAccountNo: found["Account number"] || "",
+      });
+    }
+  };
+
+  const handleApplicantAccountSelect = (e) => {
+    const acc = e.target.value;
+    if (!acc) return;
+    const found = appByAccount.get(acc);
     if (found) {
       setForm((prev) => ({
         ...prev,
-        beneficiaryName: found["Beneficiary name"] || "",
-        accountNumber: found["Account number"] || "",
-        branch: found["Branch Name"] || "",
-        center: found["Center"] || "",
-        bank: found["Bank"] || "",
-        ifsc: found["IFS Code No"] || "",
+        titleOfAccount: found["Beneficiary name"] || "",
+        applicantAccountNo: found["Account number"] || "",
       }));
     }
   };
 
-  /** Auto-calc total and words on Amount/Charges change */
+  /* Beneficiary handlers (use data2) */
+  const handleBeneficiarySelect = (e) => {
+    const val = e.target.value;
+    if (val === "__manual__") {
+      setManualEntry(true);
+      setForm((prev) => ({
+        ...prev,
+        beneficiaryName: "",
+        accountNumber: "",
+        branch: "",
+        center: "",
+        bank: "",
+        ifsc: "",
+        accountType: {
+          savings: false,
+          current: false,
+          cashCredit: false,
+          overdraft: false,
+        },
+      }));
+      return;
+    }
+    setManualEntry(false);
+    setField({ beneficiaryName: val });
+
+    const found = benByName.get(val.trim().toLowerCase());
+    if (found) {
+      const accountType = (found["account type"] || "").toLowerCase();
+      setForm((prev) => ({
+        ...prev,
+        beneficiaryName: found["Beneficiary name"] || "",
+        accountNumber: (found["Account number"] || "").slice(0, 16),
+        branch: found["Branch Name"] || "",
+        center: found["Center"] || "",
+        bank: found["Bank"] || "",
+        ifsc: (found["IFS Code No"] || "").toUpperCase().slice(0, 11),
+        accountType: {
+          savings: accountType === "savings",
+          current: accountType === "current",
+          cashCredit: accountType === "cash credit",
+          overdraft: accountType === "overdraft",
+        },
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        accountNumber: "",
+        branch: "",
+        center: "",
+        bank: "",
+        ifsc: "",
+        accountType: {
+          savings: false,
+          current: false,
+          cashCredit: false,
+          overdraft: false,
+        },
+      }));
+    }
+  };
+
+  const handleBeneficiaryManual = (e) => {
+    const name = e.target.value;
+    setManualEntry(true);
+    setField({ beneficiaryName: name });
+  };
+
+  const handleBeneficiaryAccountSelect = (e) => {
+    const acc = e.target.value;
+    if (!acc) return;
+    const found = benByAccount.get(acc);
+    if (found) {
+      const accountType = (found["account type"] || "").toLowerCase();
+      setForm((prev) => ({
+        ...prev,
+        beneficiaryName: found["Beneficiary name"] || "",
+        accountNumber: (found["Account number"] || "").slice(0, 16),
+        branch: found["Branch Name"] || "",
+        center: found["Center"] || "",
+        bank: found["Bank"] || "",
+        ifsc: (found["IFS Code No"] || "").toUpperCase().slice(0, 11),
+        accountType: {
+          savings: accountType === "savings",
+          current: accountType === "current",
+          cashCredit: accountType === "cash credit",
+          overdraft: accountType === "overdraft",
+        },
+      }));
+      setManualEntry(false);
+    }
+  };
+
+  /* Amount + Charges -> Total, and Rupees follows TOTAL */
   const handleAmountOrCharges = (key, val) => {
     const cleanVal = val.replace(/[^\d.]/g, "");
     const next = { ...form, [key]: cleanVal };
@@ -264,14 +451,13 @@ export default function BOIFormPixelPerfect() {
     const total = a + c;
 
     next.total = total ? String(total.toFixed(2)) : "";
-    // Auto-fill the "Rupees" in words line from "Amount"
-    next.rupeesInWords = a ? amountToIndianCurrencyWords(a) : "";
-    // Also reflect in declaration amount if you want it to mirror main amount
-    next.declAmount = next.declAmount || (a ? String(a.toFixed(2)) : "");
+    next.rupeesInWords = next.total
+      ? amountToIndianCurrencyWords(Number(next.total))
+      : "";
 
     setForm(next);
   };
-  // put this inside the component, next to other handlers
+
   const handleTotalChange = (val) => {
     const cleanVal = String(val).replace(/[^\d.]/g, "");
     setForm((prev) => ({
@@ -283,13 +469,18 @@ export default function BOIFormPixelPerfect() {
     }));
   };
 
+  const handleDateChange = (key, e) => {
+    const v = e.target.value; // yyyy-mm-dd
+    setField({ [key]: v });
+  };
+
   return (
     <div className="w-full flex justify-center bg-white print:bg-white">
       <style>{`
         @page { size: A4; margin: 10mm; }
         @media print {
           .no-print { display: none !important; }
-          input { -webkit-appearance: none; appearance: none; }
+          input, select { -webkit-appearance: none; appearance: none; }
           .a4 { box-shadow: none !important; border-width: 1px !important; }
         }
       `}</style>
@@ -298,12 +489,14 @@ export default function BOIFormPixelPerfect() {
         className="a4 relative bg-white text-black shadow-sm border border-black"
         style={{ width: 794, height: 1123, padding: 22 }}
       >
+        {/* Print button (hidden when printing) */}
         <button
           onClick={() => window.print()}
-          className="no-print mb-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded shadow"
+          className="no-print  p-1 bg-blue-600 text-white font-semibold rounded shadow"
         >
           Print Form
         </button>
+
         {/* Header */}
         <div className="flex items-start justify-center flex-wrap gap-1 mb-1">
           <div className="flex items-center gap-1 ">
@@ -339,29 +532,52 @@ export default function BOIFormPixelPerfect() {
           <div className="mt-[10px] text-[12px]">
             <Row className="mb-[8px]">
               <Label w={90}>(Remitter)</Label>
-              <LineInput
-                value={form.remitter}
-                onChange={(e) => setField({ remitter: e.target.value })}
-              />
             </Row>
 
             <Row className="mb-[8px]">
               <Label w={190}>1. Title of Account</Label>
-              <LineInput
+              {/* Applicant Title dropdown using data1 */}
+              <select
                 value={form.titleOfAccount}
-                onChange={(e) => setField({ titleOfAccount: e.target.value })}
-              />
+                onChange={handleApplicantTitleSelect}
+                className="h-[24px] font-bold border-b border-black outline-none bg-white"
+                style={{ width: "100%" }}
+              >
+                <option value="">— Select title —</option>
+                {applicantNameOptions.map((n, i) => (
+                  <option key={i} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
             </Row>
 
             <Row className="mb-[4px]">
               <Label w={190}>2. Account No.</Label>
-              <LineInput
-                value={form.applicantAccountNo}
-                onChange={(e) =>
-                  setField({ applicantAccountNo: e.target.value })
-                }
-              />
+              <div className="flex items-center gap-2 w-full">
+                <LineInput
+                  value={form.applicantAccountNo}
+                  onChange={(e) =>
+                    setField({ applicantAccountNo: e.target.value })
+                  }
+                />
+                {/* Add no-print here so it hides on print */}
+                <select
+                  value=""
+                  onChange={handleApplicantAccountSelect}
+                  className="no-print h-[24px] font-bold border-b border-black outline-none bg-white"
+                  style={{ width: 220 }}
+                >
+                  <option value="">— Pick from saved —</option>
+                  {applicantAccOptions.map((acc, i) => (
+                    <option key={i} value={acc}>
+                      {acc}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </Row>
+
             <Row className="mb-[10px]">
               <Label w={190}></Label>
               <div className="text-[11px]">
@@ -377,12 +593,11 @@ export default function BOIFormPixelPerfect() {
                 onChange={(e) => setField({ chqNo: e.target.value })}
               />
               <div className="w-[18px]" />
-              <Label w={50}>Date :</Label>
-              <LineInput
-                w={140}
-                placeholder="DD/MM/YYYY"
+              <Label w={80}>CHQ Date :</Label>
+              <DateInput
+                w={160}
                 value={form.chqDate}
-                onChange={(e) => setField({ chqDate: e.target.value })}
+                onChange={(e) => handleDateChange("chqDate", e)}
               />
             </Row>
           </div>
@@ -395,29 +610,68 @@ export default function BOIFormPixelPerfect() {
           </div>
           <div className="border-t border-black w-[272px] mt-[1px]" />
           <div className="mt-[10px] text-[12px] space-y-[10px]">
+            {/* HTML Dropdown or Manual Entry */}
             <Row>
               <Label w={190}>1. Beneficiary's name</Label>
-              <LineInput
-                value={form.beneficiaryName}
-                onChange={handleBeneficiaryChange}
-                list="beneficiaries"
-              />
-              <datalist id="beneficiaries">
-                {beneficiaryOptions.map((n, i) => (
-                  <option key={i} value={n} />
-                ))}
-              </datalist>
+              {!manualEntry ? (
+                <select
+                  value={form.beneficiaryName}
+                  onChange={handleBeneficiarySelect}
+                  className="h-[24px] font-bold border-b border-black outline-none bg-white"
+                  style={{ width: "100%" }}
+                >
+                  <option value="">— Select beneficiary —</option>
+                  {beneficiaryOptions.map((n, i) => (
+                    <option key={i} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                  <option value="__manual__">Manual entry…</option>
+                </select>
+              ) : (
+                <div className="flex items-center gap-2 w-full">
+                  <LineInput
+                    w={"100%"}
+                    value={form.beneficiaryName}
+                    onChange={handleBeneficiaryManual}
+                    placeholder="Type beneficiary name"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setManualEntry(false)}
+                    className="no-print px-2 py-1 text-xs border border-black rounded"
+                  >
+                    Back to list
+                  </button>
+                </div>
+              )}
             </Row>
 
             <Row>
               <Label w={190}>2. Account No.</Label>
-              <DigitBoxes
-                length={16}
-                name="beneficiary_account"
-                restrict="num"
-                value={form.accountNumber}
-                onChange={(val) => setField({ accountNumber: val })}
-              />
+              <div className="flex items-center gap-2 w-full">
+                <DigitBoxes
+                  length={16}
+                  name="beneficiary_account"
+                  restrict="num"
+                  value={form.accountNumber}
+                  onChange={(val) => setField({ accountNumber: val })}
+                />
+                {/* This dropdown hides on print */}
+                <select
+                  value=""
+                  onChange={handleBeneficiaryAccountSelect}
+                  className="no-print h-[24px] font-bold border-b border-black outline-none bg-white"
+                  style={{ width: 220 }}
+                >
+                  <option value="">— Pick from saved —</option>
+                  {accountNumberOptions.map((acc, i) => (
+                    <option key={i} value={acc}>
+                      {acc}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </Row>
 
             <Row className="items-center">
@@ -539,24 +793,21 @@ export default function BOIFormPixelPerfect() {
         <div className="mt-[12px] text-[11px] leading-[16px]">
           Please remit an amount of Rs.
           <input
-            className="w-[100px] mx-[6px] border-b border-black outline-none h-[18px] text-[11px] font-bold"
-            value={form.declAmount}
-            onChange={(e) =>
-              setField({ declAmount: e.target.value.replace(/[^\d.]/g, "") })
-            }
+            className="w-[120px] mx-[6px] border-b border-black outline-none h-[18px] text-[11px] font-bold"
+            value={form.total}
+            onChange={(e) => handleTotalChange(e.target.value)}
           />
           to the beneficiary as per the details mentioned above by debiting the
           said amount and your charges to my/our account. I have read the terms
           and conditions given overleaf and I agree to abide by them.
         </div>
 
-        {/* Sign + mobile */}
-        <div className="mt-[15px] grid grid-cols-2 gap-x-[30px]">
+        {/* Date picker + Mobile */}
+        <div className="mt-[15px] grid grid-cols-2 gap-x-[30px] items-center">
           <Label w={60}>Date :</Label>
-          <LineInput
-            placeholder="DD/MM/YYYY"
+          <DateInput
             value={form.date}
-            onChange={(e) => setField({ date: e.target.value })}
+            onChange={(e) => handleDateChange("date", e)}
           />
 
           <Label w={90}>Mobile No. :</Label>
@@ -601,11 +852,7 @@ export default function BOIFormPixelPerfect() {
             </Row>
             <Row>
               <Label w={170}>Date of Transfer</Label>
-              <LineInput
-                placeholder="DD/MM/YYYY"
-                value={form.dateOfTransfer}
-                onChange={(e) => setField({ dateOfTransfer: e.target.value })}
-              />
+              <LineInput type="text" />
             </Row>
             <Row>
               <Label w={170}>SFMS TRN No.</Label>
@@ -633,6 +880,11 @@ export default function BOIFormPixelPerfect() {
               <div className="text-[10px] mt-[3px]">(Authorised Signatory)</div>
             </div>
           </div>
+        </div>
+
+        {/* Footer marker */}
+        <div className="absolute bottom-[18px] left-[22px] text-[9px] opacity-75 select-none">
+          BOI
         </div>
       </div>
     </div>
