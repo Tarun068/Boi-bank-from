@@ -477,6 +477,15 @@ const data2 = [
     Bank: "KOTAK MAHINDRA BANK",
     "IFS Code No": "KKBK0002617",
   },
+  {
+    "Beneficiary name": "KAPOOR KHUSHI",
+    "Account number": "925010029877761",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
 ];
 
 /* -------- Main -------- */
@@ -513,7 +522,8 @@ export default function BOIFormPixelPerfect() {
     finalUtrNo: "",
   });
 
-  const [manualEntry, setManualEntry] = useState(false); // toggle for manual beneficiary entry
+  const [manualEntry, setManualEntry] = useState(false);
+  const [signatureSrc, setSignatureSrc] = useState(null);
 
   /* Lookups */
   // Applicant lookups use data1
@@ -595,6 +605,13 @@ export default function BOIFormPixelPerfect() {
         applicantAccountNo: found["Account number"] || "",
       });
     }
+  };
+  const handleSignatureFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setSignatureSrc(reader.result); // data URL works well for print
+    reader.readAsDataURL(file);
   };
 
   const handleApplicantAccountSelect = (e) => {
@@ -790,13 +807,18 @@ export default function BOIFormPixelPerfect() {
   return (
     <div className="w-full flex justify-center bg-white print:bg-white">
       <style>{`
-        @page { size: A4; margin: 10mm; }
-        @media print {
-          .no-print { display: none !important; }
-          input, select { -webkit-appearance: none; appearance: none; }
-          .a4 { box-shadow: none !important; border-width: 1px !important; }
-        }
-      `}</style>
+  @page { size: A4; margin: 10mm; }
+  @media print {
+    .no-print { display: none !important; }
+    input, select { -webkit-appearance: none; appearance: none; }
+    input[type="checkbox"] {
+      -webkit-appearance: checkbox !important;
+      appearance: checkbox !important;
+    }
+    .a4 { box-shadow: none !important; border-width: 1px !important; }
+    .signature-img { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+`}</style>
 
       <div
         className="a4 relative bg-white text-black shadow-sm border border-black"
@@ -839,7 +861,7 @@ export default function BOIFormPixelPerfect() {
         {/* Applicant */}
         <div className="mt-[16px]">
           <div className="text-[15px] font-bold">
-            DETAILS OF APPLICANT (मोकद्दार)
+            DETAILS OF APPLICANT (મોકલનાર )
           </div>
           <div className="border-t border-black w-[245px] mt-[1px]" />
           <div className="mt-[10px] text-[12px]">
@@ -1113,9 +1135,38 @@ export default function BOIFormPixelPerfect() {
         </div>
 
         {/* Sign lines */}
-        <div className="mt-[28px] flex justify-end">
-          <div className="w-[240px] text-center">
-            <div className="border-b border-black h-[18px]" />
+        {/* <div className="w-[100px] flex  no-print shrink-0">
+          <input type="file" accept="image/*" onChange={handleSignatureFile} />
+          {signatureSrc && (
+            <button
+              type="button"
+              className="text-xs border border-black p-1 rounded w-full"
+              onClick={() => setSignatureSrc(null)}
+            >
+              Remove
+            </button>
+          )}
+        </div> */}
+
+        {/* widen container so both fit comfortably */}
+
+        <div className="w-full flex justify-end gap-10">
+          <div className="w-[200px] text-center relative">
+            {/* <div className="flex justify-center items-end h-[42px]">
+              {signatureSrc && (
+                <img
+                  src={signatureSrc}
+                  alt="Signature"
+                  className="signature-img"
+                  style={{
+                    maxWidth: 300,
+                    maxHeight: 36,
+                    objectFit: "contain",
+                  }}
+                />
+              )}
+            </div> */}
+            <div className="mt-16 border-b border-black h-[2px]" />
             <div className="text-[10px] mt-[3px]">(Authorised Signatory)</div>
           </div>
         </div>
