@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo } from "react";
-import boi from "./assets/boi.png";
+import boi from "../assets/boi.png";
 
 /* -------- Helpers: Number → Words (Indian currency) -------- */
 function numToWordsBelowThousand(n, ones, tens) {
