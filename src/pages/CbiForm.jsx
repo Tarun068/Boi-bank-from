@@ -312,6 +312,15 @@ const BENEFICIARY_DATA = [
     Bank: "AXIS BANK",
     "IFS Code No": "UTIB0003120",
   },
+  {
+    "Beneficiary name": "VARUN HIREN KAPOOR",
+    "Account number": "924010075226710",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
 ];
 
 const SectionTitle = ({ children }) => (
@@ -389,7 +398,8 @@ const accountTypes = [
 
 export default function CbiForm() {
   const [form, setForm] = useState({ chqDate: "" });
-
+  const [amount, setAmount] = useState("");
+  const [amountInWords, setAmountInWords] = useState("");
   const handleDateChange = (key, e) => {
     setForm((s) => ({ ...s, [key]: e.target.value }));
   };
@@ -434,6 +444,80 @@ export default function CbiForm() {
     () => BENEFICIARY_DATA.map((b) => b["Account number"]),
     []
   );
+
+  const numberToWords = (num) => {
+    const a = [
+      "",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+      "Ten",
+      "Eleven",
+      "Twelve",
+      "Thirteen",
+      "Fourteen",
+      "Fifteen",
+      "Sixteen",
+      "Seventeen",
+      "Eighteen",
+      "Nineteen",
+    ];
+    const b = [
+      "",
+      "",
+      "Twenty",
+      "Thirty",
+      "Forty",
+      "Fifty",
+      "Sixty",
+      "Seventy",
+      "Eighty",
+      "Ninety",
+    ];
+
+    if ((num = num.toString()).length > 9) return "overflow";
+    const n = ("000000000" + num)
+      .substr(-9)
+      .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+    if (!n) return "";
+    let str = "";
+    str +=
+      n[1] != 0
+        ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + " Crore "
+        : "";
+    str +=
+      n[2] != 0
+        ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + " Lakh "
+        : "";
+    str +=
+      n[3] != 0
+        ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + " Thousand "
+        : "";
+    str +=
+      n[4] != 0
+        ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + " Hundred "
+        : "";
+    str +=
+      n[5] != 0
+        ? (str != "" ? "and " : "") +
+          (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) +
+          " "
+        : "";
+    return str.trim() + " Only";
+  };
+
+  const handleAmountChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, ""); // allow only numbers
+    setAmount(value);
+    if (value) setAmountInWords(numberToWords(value));
+    else setAmountInWords("");
+  };
 
   /* Helpers */
   const norm = (v) =>
@@ -920,11 +1004,15 @@ export default function CbiForm() {
           Please remit a sum of Rs.&nbsp;&nbsp;
           <input
             type="text"
+            value={amount}
+            onChange={handleAmountChange}
             className="w-[150px] border-b outline-none text-base"
           />{" "}
           (Rs.&nbsp;&nbsp;
           <input
             type="text"
+            value={amountInWords}
+            readOnly
             className="w-[250px] border-b outline-none text-base"
           />
           ) only as per details given below and debit the amount with your

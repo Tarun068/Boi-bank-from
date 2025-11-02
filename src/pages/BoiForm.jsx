@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import boi from "../assets/boi.png";
 
 /* -------- Helpers: Number → Words (Indian currency) -------- */
@@ -92,112 +92,6 @@ function amountToIndianCurrencyWords(input) {
   }
   return ` ${rupeeWords} Only`;
 }
-
-/* -------- UI bits -------- */
-const Row = ({ children, className = "" }) => (
-  <div className={`flex items-center ${className}`}>{children}</div>
-);
-
-const Label = ({ children, w = 190 }) => (
-  <div className="shrink-0" style={{ width: w }}>
-    {children}
-  </div>
-);
-
-const LineInput = ({
-  value,
-  onChange,
-  w = "100%",
-  placeholder = "",
-  list,
-  type = "text",
-}) => (
-  <input
-    type={type}
-    placeholder={placeholder}
-    value={value}
-    onChange={onChange}
-    list={list}
-    className="outline-none h-[22px] font-bold border-b border-black"
-    style={{ width: w }}
-  />
-);
-
-function DigitBoxes({
-  length = 16,
-  name = "digits",
-  box = 22,
-  gap = 4,
-  value = "",
-  onChange,
-  restrict = "alnum",
-}) {
-  const refs = useRef([]);
-  const clean = (ch) =>
-    restrict === "num"
-      ? ch.slice(0, 1).replace(/[^0-9]/g, "")
-      : ch.slice(0, 1).replace(/[^0-9A-Za-z]/g, "");
-
-  const handleChange = (e, i) => {
-    const v = clean(e.target.value);
-    const arr = value.split("");
-    arr[i] = v;
-    const joined = arr.join("");
-    onChange(joined);
-    if (v && i < length - 1) refs.current[i + 1]?.focus();
-  };
-
-  const onKeyDown = (e, i) => {
-    if (e.key === "Backspace" && !e.currentTarget.value && i > 0)
-      refs.current[i - 1]?.focus();
-  };
-
-  const chars = useMemo(
-    () => Array.from({ length }, (_, i) => value[i] || ""),
-    [value, length]
-  );
-
-  return (
-    <div className="flex" style={{ gap }}>
-      {chars.map((ch, i) => (
-        <input
-          key={i}
-          name={`${name}_${i}`}
-          maxLength={1}
-          value={ch}
-          ref={(el) => (refs.current[i] = el)}
-          onChange={(e) => handleChange(e, i)}
-          onKeyDown={(e) => onKeyDown(e, i)}
-          className="text-center font-bold border border-black outline-none"
-          style={{ width: box, height: box, fontSize: 13 }}
-        />
-      ))}
-    </div>
-  );
-}
-const DateInput = ({ value, onChange, w = "100%" }) => {
-  const ref = useRef(null);
-
-  const openPicker = () => {
-    // Chrome/Edge support showPicker; others will just focus
-    ref.current?.showPicker?.();
-    ref.current?.focus();
-  };
-
-  return (
-    <input
-      ref={ref}
-      type="date"
-      value={value}
-      onChange={onChange}
-      onClick={openPicker} // click anywhere on field opens picker
-      onFocus={(e) => e.target.showPicker?.()} // also open when focused
-      className="outline-none h-[22px] font-bold border-b border-black"
-      style={{ width: w }}
-    />
-  );
-};
-
 /* -------- Demo data -------- */
 const data1 = [
   {
@@ -291,6 +185,15 @@ const data2 = [
   {
     "Beneficiary name": "MUNIBEN PRAJAPATI",
     "Account number": "925010029882093",
+    "Branch Name": "KUBERNAGAR",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "AXIS BANK",
+    "IFS Code No": "UTIB0003120",
+  },
+  {
+    "Beneficiary name": "VARUN HIREN KAPOOR",
+    "Account number": "924010075226710",
     "Branch Name": "KUBERNAGAR",
     "account type": "savings",
     Center: "AHMEDABAD",
@@ -488,6 +391,111 @@ const data2 = [
   },
 ];
 
+/* -------- UI bits -------- */
+const Row = ({ children, className = "" }) => (
+  <div className={`flex items-center ${className}`}>{children}</div>
+);
+
+const Label = ({ children, w = 190 }) => (
+  <div className="shrink-0" style={{ width: w }}>
+    {children}
+  </div>
+);
+
+const LineInput = ({
+  value,
+  onChange,
+  w = "100%",
+  placeholder = "",
+  list,
+  type = "text",
+}) => (
+  <input
+    type={type}
+    placeholder={placeholder}
+    value={value}
+    onChange={onChange}
+    list={list}
+    className="outline-none h-[22px] font-bold border-b border-black"
+    style={{ width: w }}
+  />
+);
+
+function DigitBoxes({
+  length = 16,
+  name = "digits",
+  box = 22,
+  gap = 4,
+  value = "",
+  onChange,
+  restrict = "alnum",
+}) {
+  const refs = useRef([]);
+  const clean = (ch) =>
+    restrict === "num"
+      ? ch.slice(0, 1).replace(/[^0-9]/g, "")
+      : ch.slice(0, 1).replace(/[^0-9A-Za-z]/g, "");
+
+  const handleChange = (e, i) => {
+    const v = clean(e.target.value);
+    const arr = value.split("");
+    arr[i] = v;
+    const joined = arr.join("");
+    onChange(joined);
+    if (v && i < length - 1) refs.current[i + 1]?.focus();
+  };
+
+  const onKeyDown = (e, i) => {
+    if (e.key === "Backspace" && !e.currentTarget.value && i > 0)
+      refs.current[i - 1]?.focus();
+  };
+
+  const chars = useMemo(
+    () => Array.from({ length }, (_, i) => value[i] || ""),
+    [value, length]
+  );
+
+  return (
+    <div className="flex" style={{ gap }}>
+      {chars.map((ch, i) => (
+        <input
+          key={i}
+          name={`${name}_${i}`}
+          maxLength={1}
+          value={ch}
+          ref={(el) => (refs.current[i] = el)}
+          onChange={(e) => handleChange(e, i)}
+          onKeyDown={(e) => onKeyDown(e, i)}
+          className="text-center font-bold border border-black outline-none"
+          style={{ width: box, height: box, fontSize: 13 }}
+        />
+      ))}
+    </div>
+  );
+}
+const DateInput = ({ value, onChange, w = "100%" }) => {
+  const ref = useRef(null);
+
+  const openPicker = () => {
+    // Chrome/Edge support showPicker; others will just focus
+    ref.current?.showPicker?.();
+    ref.current?.focus();
+  };
+
+  return (
+    <input
+      ref={ref}
+      type="date"
+      value={value}
+      onChange={onChange}
+      onClick={openPicker} // click anywhere on field opens picker
+      onFocus={(e) => e.target.showPicker?.()} // also open when focused
+      className="outline-none h-[22px] font-bold border-b border-black"
+      style={{ width: w }}
+    />
+  );
+};
+
 /* -------- Main -------- */
 export default function BOIFormPixelPerfect() {
   const [form, setForm] = useState({
@@ -593,19 +601,25 @@ export default function BOIFormPixelPerfect() {
 
   /* Applicant handlers (use data1) */
   const handleApplicantTitleSelect = (e) => {
-    const val = e.target.value;
+    const val = e.target.value || "";
     setField({ titleOfAccount: val });
-    const found = appByName.get(
-      String(val || "")
-        .trim()
-        .toLowerCase()
-    );
+
+    if (!val) {
+      // cleared
+      setField({ applicantAccountNo: "" });
+      return;
+    }
+
+    const found = appByName.get(val.trim().toLowerCase());
     if (found) {
       setField({
         applicantAccountNo: found["Account number"] || "",
       });
+    } else {
+      setField({ applicantAccountNo: "" });
     }
   };
+
   const handleSignatureFile = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -629,7 +643,8 @@ export default function BOIFormPixelPerfect() {
 
   /* Beneficiary handlers (use data2) */
   const handleBeneficiarySelect = (e) => {
-    const val = e.target.value;
+    const val = e.target.value || "";
+
     if (val === "__manual__") {
       setManualEntry(true);
       setForm((prev) => ({
@@ -649,6 +664,28 @@ export default function BOIFormPixelPerfect() {
       }));
       return;
     }
+
+    // cleared via SearchableSelect
+    if (!val) {
+      setManualEntry(false);
+      setForm((prev) => ({
+        ...prev,
+        beneficiaryName: "",
+        accountNumber: "",
+        branch: "",
+        center: "",
+        bank: "",
+        ifsc: "",
+        accountType: {
+          savings: false,
+          current: false,
+          cashCredit: false,
+          overdraft: false,
+        },
+      }));
+      return;
+    }
+
     setManualEntry(false);
     setField({ beneficiaryName: val });
 
@@ -760,22 +797,44 @@ export default function BOIFormPixelPerfect() {
     w = "100%",
     className = "",
   }) => {
-    const [search, setSearch] = useState("");
+    const [inputValue, setInputValue] = useState(value || "");
+    const [open, setOpen] = useState(false);
+
+    // keep input synced with external value when it changes from outside
+    useEffect(() => {
+      setInputValue(value || "");
+    }, [value]);
+
     const filtered = options.filter((opt) =>
-      opt.toLowerCase().includes(search.toLowerCase())
+      opt.toLowerCase().includes((inputValue || "").toLowerCase())
     );
 
     return (
       <div className="relative w-full">
         <input
-          value={search || value}
-          onChange={(e) => setSearch(e.target.value)}
+          value={inputValue}
+          onChange={(e) => {
+            const v = e.target.value;
+            setInputValue(v);
+            if (v === "") {
+              // clearing the field should clear selection in parent
+              onChange("");
+            }
+            setOpen(true);
+          }}
+          onFocus={(e) => {
+            e.target.select();
+            setOpen(true);
+          }}
+          onBlur={() => {
+            // close list shortly after blur to allow click
+            setTimeout(() => setOpen(false), 100);
+          }}
           placeholder={placeholder}
           className={`h-[24px] font-bold border-b border-black outline-none bg-white ${className}`}
           style={{ width: w }}
-          onFocus={(e) => e.target.select()}
         />
-        {search && (
+        {open && inputValue !== "" && (
           <div
             className="absolute left-0 top-[100%] bg-white border border-black max-h-[150px] overflow-y-auto z-50"
             style={{ width: w }}
@@ -787,7 +846,8 @@ export default function BOIFormPixelPerfect() {
                   className="px-2 py-[3px] text-[12px] hover:bg-gray-100 cursor-pointer"
                   onMouseDown={() => {
                     onChange(opt);
-                    setSearch("");
+                    setInputValue(opt);
+                    setOpen(false);
                   }}
                 >
                   {opt}
