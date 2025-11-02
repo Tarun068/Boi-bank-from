@@ -1,5 +1,6 @@
 import { useMemo, useState, useRef } from "react";
 import cbi from "../assets/cbi.png";
+
 const APPLICANT_DATA = [
   {
     name: "HIREN SUSHIL KAPOOR",
@@ -10,31 +11,6 @@ const APPLICANT_DATA = [
     name: "PRIYA HIREN KAPOOR",
     "Account number": "5823239684",
     "Account Type": "saving bank",
-  },
-  {
-    name: "VARUN HIREN KAPOOR",
-    "Account number": "5823239764",
-    "Account Type": "saving bank",
-  },
-  {
-    name: "HIREN SUSHIL KAPOOR",
-    "Account number": "5835809164",
-    "Account Type": "overdraft",
-  },
-  {
-    name: "HIREN SUSHIL KAPOOR",
-    "Account number": "5761277889",
-    "Account Type": "overdraft",
-  },
-  {
-    name: "VARUN HIREN KAPOOR",
-    "Account number": "5835801675",
-    "Account Type": "overdraft",
-  },
-  {
-    name: "PRIYA HIREN KAPOOR",
-    "Account number": "5835806628",
-    "Account Type": "overdraft",
   },
 ];
 
@@ -56,260 +32,6 @@ const BENEFICIARY_DATA = [
     Center: "AHMEDABAD",
     Bank: "BANK OF BARODA",
     "IFS Code No": "BARB0DBKUBE",
-  },
-  {
-    "Beneficiary name": "MAHEK HIREN KAPOOR",
-    "Account number": "84050100026881",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "BANK OF BARODA",
-    "IFS Code No": "BARB0DBKUBE",
-  },
-  {
-    "Beneficiary name": "HITENDRA KAUSHIK PARMAR",
-    "Account number": "919010001008120",
-    "Branch Name": "KANJUMARG EAST",
-    "account type": "savings",
-    Center: "MUMBAI",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0004166",
-  },
-  {
-    "Beneficiary name": "MEGHA KAUSHIK PARMAR",
-    "Account number": "5870137117",
-    "Branch Name": "TIMES SQUARE BR MUM MH",
-    "account type": "savings",
-    Center: "MUMBAI",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0005115",
-  },
-  {
-    "Beneficiary name": "MUNIBEN PRAJAPATI",
-    "Account number": "925010029882093",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0003120",
-  },
-  {
-    "Beneficiary name": "DIGVIJAY CHAVADA",
-    "Account number": "925010037615724",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0003120",
-  },
-  {
-    "Beneficiary name": "ADITYA UPADHYAY",
-    "Account number": "925010038277743",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0003120",
-  },
-  {
-    "Beneficiary name": "GUPTA  ABHISHEK",
-    "Account number": "925010039295201",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0003120",
-  },
-  {
-    "Beneficiary name": "ABBI ABHISHEK",
-    "Account number": "924010075287838",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0003120",
-  },
-  {
-    "Beneficiary name": "ABBI PUNAM",
-    "Account number": "925010003039628",
-    "Branch Name": "OLD PADRA ROAD",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0002862",
-  },
-  {
-    "Beneficiary name": "HIREN SUSHILKUMAR KAPOOR",
-    "Account number": "919010047553831",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0003120",
-  },
-
-  {
-    "Beneficiary name": "SUNIL HARISHANKAR PRAJAPATI",
-    "Account number": "206210110015211",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "HIREN SUSHIL KAPOOR",
-    "Account number": "206210110002242",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "VARUN HIREN KAPOOR",
-    "Account number": "206210110013737",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "PRIYA HIREN KAPOOR",
-    "Account number": "206210110002100",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "HIREN SUSHIL KAPOOR HUF",
-    "Account number": "206210110008093",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "AMAN SADHVANI",
-    "Account number": "206210110016789",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "SONIYA SHIVKUMAR TADAKE",
-    "Account number": "206216510000063",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "MAHEK HIREN KAPOOR",
-    "Account number": "206210110016036",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "DHRUV MAHENDRAKUMAR PRAJAPATI",
-    "Account number": "206810110016225",
-    "Branch Name": "MEGHANINAGR",
-    "account type": "savings",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-  {
-    "Beneficiary name": "HIREN SUSHIL KAPOOR",
-    "Account number": "206227210000033",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "overdraft",
-    Center: "VADODARA",
-    Bank: "BANK OF INDIA",
-    "IFS Code No": "BKID0002062",
-  },
-
-  {
-    "Beneficiary name": "MILAN THAKUR",
-    "Account number": "60501025452",
-    "Branch Name": "VESU SURAT",
-    "account type": "savings",
-    Center: "SURAT",
-    Bank: "BANK OF MAHARASHTRA",
-    "IFS Code No": "MAHB0002269",
-  },
-  {
-    "Beneficiary name": "SACHIN PRAJAPATI",
-    "Account number": "40218633520",
-    "Branch Name": "NEEM KA THANA",
-    "account type": "savings",
-    Center: "NEEM KA THANA",
-    Bank: "STATE BANK OF INDIA",
-    "IFS Code No": "SBIN0010080",
-  },
-  {
-    "Beneficiary name": "PRIYANKA PRAJAPATI",
-    "Account number": "2718000100397437",
-    "Branch Name": "NEEM KA THANA",
-    "account type": "savings",
-    Center: "NEEM KA THANA",
-    Bank: "PUNJAB NATIONAL BANK",
-    "IFS Code No": "PUNB0271800",
-  },
-  {
-    "Beneficiary name": "SONIYA MAHENDRAKUMAR PRAJAPATI",
-    "Account number": "20301913090",
-    "Branch Name": "MEGHANINAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "STATE BANK OF INDIA",
-    "IFS Code No": "SBIN0006140",
-  },
-  {
-    "Beneficiary name": "L AND T FINANCE LIMITED",
-    "Account number": "LTHLH02LP250212185511",
-    "Branch Name": "MUMBAI",
-    "account type": "current",
-    Center: "MUMBAI",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0CCH274",
-  },
-  {
-    "Beneficiary name": "KAUSHIK NAROTTAM PARMAR",
-    "Account number": "1606000301099915",
-    "Branch Name": "MUMBAI",
-    "account type": "savings",
-    Center: "MUMBAI",
-    Bank: "PUNJAB NATIONAL BANK",
-    "IFS Code No": "PUNB0160600",
-  },
-  {
-    "Beneficiary name": "BHATT TIRTH  PARASBHAI",
-    "Account number": "8848328812",
-    "Branch Name": "ISCON AMBLI ROAD",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "KOTAK MAHINDRA BANK",
-    "IFS Code No": "KKBK0002617",
-  },
-  {
-    "Beneficiary name": "KAPOOR KHUSHI",
-    "Account number": "925010029877761",
-    "Branch Name": "KUBERNAGAR",
-    "account type": "savings",
-    Center: "AHMEDABAD",
-    Bank: "AXIS BANK",
-    "IFS Code No": "UTIB0003120",
   },
 ];
 
@@ -518,9 +240,369 @@ export default function CbiForm() {
 
   return (
     <div className="p-4">
-      <div className="mx-auto max-w-[980px] bg-white text-black border border-gray-500 shadow-sm p-4 md:p-5 print:p-5 font-['Poppins']">
+      <style>{`
+        @page { 
+          size: A4 portrait; 
+          margin: 5mm;
+        }
+
+        @media print {
+          * {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+
+          body, html {
+            margin: 0 !important;
+            padding: 0 !important;
+            height: auto !important;
+          }
+
+          .print-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 4mm !important;
+            box-shadow: none !important;
+            border: none !important;
+            page-break-after: avoid !important;
+            page-break-inside: avoid !important;
+            font-size: 7pt !important;
+            line-height: 1.1 !important;
+          }
+
+          /* Header section */
+          .print-header {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 2mm !important;
+            margin-bottom: 2mm !important;
+          }
+
+          .print-header img {
+            height: 100px !important;
+            width: auto !important;
+          }
+
+          .print-header h1 {
+            font-size: 10pt !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1.1 !important;
+          }
+
+          /* Address section - ultra compact */
+          .address-block {
+            margin-top: 2mm !important;
+            margin-bottom: 2mm !important;
+            font-size: 10pt !important;
+            line-height: 1 !important;
+          }
+
+          .address-block > div {
+            margin: 0.5mm 0 !important;
+          }
+
+          .address-block input {
+            font-size: 10pt !important;
+            padding: 0 !important;
+            height: 12px !important;
+          }
+
+          /* Amount section - compact */
+          .amount-section {
+            margin-top: 1mm !important;
+            margin-bottom: 1mm !important;
+            font-size: 10pt !important;
+            line-height: 1.1 !important;
+          }
+
+          .amount-section input {
+            font-size: 10pt !important;
+            padding: 0 2px !important;
+            height: 12px !important;
+          }
+
+          /* Payment type checkboxes */
+          .payment-type {
+            margin-top: 1mm !important;
+            margin-bottom: 2mm !important;
+            gap: 10px !important;
+            font-size: 7pt !important;
+          }
+
+          .payment-type input[type="checkbox"] {
+            width: 10px !important;
+            height: 10px !important;
+          }
+
+          /* Main details grid - CRITICAL FIX */
+          .details-grid {
+            margin-top: 2mm !important;
+            margin-bottom: 2mm !important;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            border: 1px solid black !important;
+          }
+
+          .details-grid > div:first-child {
+            border-right: 1px solid black !important;
+          }
+
+          .details-grid .section-title {
+            font-size: 8pt !important;
+            padding: 1mm !important;
+            border-bottom: 1px solid black !important;
+          }
+
+          .details-grid .grid-content {
+            padding: 1mm !important;
+            display: grid !important;
+            grid-template-rows: repeat(8, auto) !important;
+            gap: 1mm !important;
+          }
+
+          .details-grid .grid-content > div {
+            display: flex !important;
+            align-items: flex-end !important;
+            gap: 2mm !important;
+            min-height: 14px !important;
+          }
+
+          .details-grid label,
+          .details-grid span {
+            font-size: 8pt !important;
+            white-space: nowrap !important;
+          }
+
+          .details-grid input,
+          .details-grid select {
+            font-size: 8pt !important;
+            padding: 0 2px !important;
+            height: auto !important;
+            min-height: 12px !important;
+            line-height: 1 !important;
+          }
+
+          .details-grid textarea {
+            font-size: 8pt !important;
+            padding: 1mm !important;
+            min-height: 25px !important;
+            max-height: 25px !important;
+            line-height: 1.1 !important;
+            resize: none !important;
+          }
+
+          /* Terms section - ultra compact */
+          .terms-section {
+            margin-top: 5mm !important;
+            margin-bottom: 2mm !important;
+          }
+
+          .terms-section .section-header {
+            font-size: 10pt !important;
+            margin-bottom: 1mm !important;
+          }
+
+          .terms-section ul {
+            margin: 1mm 0 !important;
+            padding-left: 12px !important;
+          }
+
+          .terms-section li {
+            font-size: 8pt !important;
+            line-height: 1.1 !important;
+            margin: 0.5mm 0 !important;
+          }
+
+          /* Declaration section - compact */
+          .declaration-section {
+            margin-top: 2mm !important;
+            margin-bottom: 2mm !important;
+          }
+
+          .declaration-section .section-header {
+            font-size: 10pt !important;
+            margin-bottom: 1mm !important;
+          }
+
+          .declaration-section p {
+            font-size: 8pt !important;
+            line-height: 1.1 !important;
+            margin: 1mm 0 !important;
+          }
+
+          .signature-area {
+            margin-top: 2mm !important;
+          }
+
+          .signature-area > div {
+            margin-top: 1mm !important;
+          }
+
+          .signature-area .text-center:first-child {
+            font-size: 10pt !important;
+            margin-bottom: 1mm !important;
+          }
+
+          .signature-area input {
+            width: 100px !important;
+            margin-bottom: 1mm !important;
+            font-size: 10pt !important;
+          }
+
+          .signature-area span {
+            font-size: 10pt !important;
+          }
+
+          /* Office section - ultra compact with correct layout */
+          .office-section {
+            margin-top: 1.5mm !important;
+            margin-bottom: 1.5mm !important;
+            border: 1px solid black !important;
+          }
+
+          .office-section .section-header {
+            font-size: 8pt !important;
+            padding: 1mm !important;
+            border-bottom: none !important;
+          }
+
+          .office-grid {
+            padding: 1.5mm !important;
+          }
+
+          .office-grid .space-y-2 {
+            gap: 1.5mm !important;
+          }
+
+          /* Fix the grid layout - maintain 3 columns */
+          .office-grid .grid {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr 1fr !important;
+            gap: 0.5mm !important;
+          }
+
+          .office-grid .grid > div {
+            padding: 1mm 1.5mm !important;
+            font-size: 10pt !important;
+            line-height: 1.1 !important;
+            border: 1px solid black !important;
+          }
+
+          /* First column takes 6 units, other two take 3 each */
+          .office-grid .grid > div:first-child {
+            grid-column: span 6 !important;
+             padding: 1.5mm !important;
+          }
+
+          .office-grid .grid > div:nth-child(2) {
+            grid-column: span 3 !important;
+             padding: 1.5mm !important;
+          }
+
+          .office-grid .grid > div:nth-child(3) {
+            grid-column: span 3 !important;
+             padding: 1.5mm !important;
+          }
+
+          /* Ensure grid is 12 columns for proper md:col-span */
+          .office-grid .grid-cols-12 {
+            display: grid !important;
+            grid-template-columns: repeat(12, 1fr) !important;
+          }
+
+          .office-grid .col-span-12 {
+            grid-column: span 12 !important;
+          }
+
+          .office-grid .md\\:col-span-6 {
+            grid-column: span 6 !important;
+          }
+
+          .office-grid .md\\:col-span-3 {
+            grid-column: span 3 !important;
+          }
+
+          .office-grid input {
+            font-size: 10pt !important;
+            padding: 0 1px !important;
+            height: 8px !important;
+            border: none !important;
+            border-bottom: 1px solid black !important;
+          }
+
+          .office-grid .font-semibold {
+            font-size: 10pt !important;
+            margin-bottom: 0.5mm !important;
+          }
+
+          .office-grid .mt-2 {
+            margin-top: 0.5mm !important;
+          }
+
+          .office-grid .mt-5 {
+            margin-top: 1mm !important;
+          }
+
+          .office-grid span {
+            font-size: 10pt !important;
+          }
+
+          /* Transaction Reference row */
+          .office-grid > .mt-2 {
+            margin-top: 0.5mm !important;
+            font-size: 5.5pt !important;
+          }
+
+          /* Acknowledgement - ultra compact */
+          .ack-section {
+            margin-top: 3mm !important;
+          }
+
+          .ack-section .section-header {
+            font-size: 12pt !important;
+            padding: 0.5mm !important;
+          }
+
+          .ack-content {
+            padding: 0.5mm 1mm !important;
+          }
+
+          .ack-content .space-y-2 {
+            gap: 0.5mm !important;
+          }
+
+          .ack-content > div {
+            gap: 1mm !important;
+            margin-bottom: 3mm !important;
+          }
+
+          .ack-content span {
+            font-size: 12pt !important;
+            white-space: nowrap !important;
+          }
+
+          .ack-content input {
+            font-size: 5.5pt !important;
+            padding: 0 1px !important;
+            height: 8px !important;
+          }
+
+          .ack-content .mt-6 {
+            margin-top: 1mm !important;
+          }
+
+          .ack-content .flex {
+            align-items: flex-end !important;
+          }
+        }
+      `}</style>
+
+      <div className="print-container mx-auto max-w-[980px] bg-white text-black border border-gray-500 shadow-sm p-4 md:p-5 print:p-5 font-['Poppins']">
         {/* Header */}
-        <div className="flex flex-col items-center justify-between gap-3">
+        <div className="print-header flex flex-col items-center justify-between gap-3">
           <div className="h-10 w-40 flex items-center justify-center text-[10px]">
             <img src={cbi} alt="" />
           </div>
@@ -532,7 +614,7 @@ export default function CbiForm() {
         </div>
 
         {/* Address block */}
-        <div className="mt-3 text-[14px] leading-5">
+        <div className="address-block mt-3 text-[14px] leading-5">
           <div>To,</div>
           <div>The Branch Manager</div>
           <div className="font-semibold">Central Bank of India</div>
@@ -553,7 +635,7 @@ export default function CbiForm() {
         </div>
 
         {/* Amount line */}
-        <div className="mt-2 text-[14px] leading-5">
+        <div className="amount-section mt-2 text-[14px] leading-5">
           Dear Sir / Madam,
           <br />
           Please remit a sum of Rs.&nbsp;&nbsp;
@@ -571,7 +653,7 @@ export default function CbiForm() {
         </div>
 
         {/* Cash / Cheque */}
-        <div className="flex gap-10 mt-3 text-[12px]">
+        <div className="payment-type flex gap-10 mt-3 text-[12px]">
           <label className="inline-flex items-center gap-2 text-base">
             <input type="checkbox" className="w-4 h-4" />
             Cash
@@ -583,12 +665,14 @@ export default function CbiForm() {
         </div>
 
         {/* Two-column boxed table */}
-        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 border border-black">
+        <div className="details-grid mt-3 grid grid-cols-1 md:grid-cols-2 border border-black">
           {/* Applicant */}
           <div className="border-r border-black">
-            <SectionTitle>DETAILS OF APPLICANT</SectionTitle>
+            <div className="section-title">
+              <SectionTitle>DETAILS OF APPLICANT</SectionTitle>
+            </div>
             <div
-              className="p-2 grid"
+              className="grid-content p-2 grid"
               style={{ gridTemplateRows: "repeat(8, minmax(28px, auto))" }}
             >
               <div className="flex items-end gap-2">
@@ -682,9 +766,11 @@ export default function CbiForm() {
 
           {/* Beneficiary */}
           <div>
-            <SectionTitle>DETAILS OF BENEFICIARY</SectionTitle>
+            <div className="section-title">
+              <SectionTitle>DETAILS OF BENEFICIARY</SectionTitle>
+            </div>
             <div
-              className="p-2 grid"
+              className="grid-content p-2 grid"
               style={{ gridTemplateRows: "repeat(8, minmax(28px, auto))" }}
             >
               <div className="flex items-end gap-2">
@@ -781,8 +867,8 @@ export default function CbiForm() {
         </div>
 
         {/* Terms */}
-        <div className="mt-4">
-          <div className="text-[16px] font-semibold text-center underline">
+        <div className="terms-section mt-4">
+          <div className="section-header text-[16px] font-semibold text-center underline">
             TERMS &amp; CONDITIONS
           </div>
           <ul className="list-disc pl-5 mt-2 text-[14px] space-y-1">
@@ -802,8 +888,8 @@ export default function CbiForm() {
         </div>
 
         {/* Declaration */}
-        <div className="mt-4">
-          <div className="text-[16px] font-semibold text-center underline">
+        <div className="declaration-section mt-4">
+          <div className="section-header text-[16px] font-semibold text-center underline">
             DECLARATION
           </div>
           <div className="text-[14px] leading-5 mt-2 space-y-2">
@@ -821,31 +907,31 @@ export default function CbiForm() {
             </p>
             <p>
               Under normal circumstances, the beneficiary bank/branch would
-              credit the beneficiary’s account on the same day (i.e. on the date
+              credit the beneficiary's account on the same day (i.e. on the date
               of this application) and the beneficiary bank/branch centre
               subject to the RTGS guidelines/rules/regulation by RBI.
             </p>
           </div>
-          <div className="flex justify-end items-center">
+          <div className="signature-area flex justify-end items-center">
             <div className="flex flex-col  mt-2 ">
               <div className=" text-center text-[14px] mb-3">
                 Yours Faithfully,
               </div>
               <input className="w-[170px] border-b outline-none mb-2 " />
-              <span className="text-center">Applicant’s Signature(s)</span>
+              <span className="text-center">Applicant's Signature(s)</span>
             </div>
           </div>
         </div>
 
         {/* Office use only */}
-        <div className="mt-4 border border-black">
-          <div className=" font-semibold text-[16px] tracking-wide px-2 py-1  border-black text-center">
+        <div className="office-section mt-4 border border-black">
+          <div className="section-header font-semibold text-[16px] tracking-wide px-2 py-1  border-black text-center">
             FOR OFFICE USE ONLY
           </div>
-          <div className="p-2 text-[14px] space-y-2">
+          <div className="office-grid p-2 text-[14px] space-y-2">
             <div className="grid grid-cols-12 gap-2">
               <div className="col-span-12 md:col-span-6  p-2 border">
-                <span>Applicant’s Signature(s) verified by:&nbsp;</span>
+                <span>Applicant's Signature(s) verified by:&nbsp;</span>
                 <TextLine className="w-40 mt-5" />
                 <div className="mt-2">
                   S. S. No.:&nbsp;
@@ -887,11 +973,11 @@ export default function CbiForm() {
         </div>
 
         {/* Acknowledgement */}
-        <div className="mt-4 ">
-          <div className=" font-semibold text-[16px] px-2 py-1  text-center">
+        <div className="ack-section mt-4 ">
+          <div className="section-header font-semibold text-[16px] px-2 py-1  text-center">
             ACKNOWLEDGEMENT
           </div>
-          <div className="p-2 text-[14px] space-y-2">
+          <div className="ack-content p-2 text-[14px] space-y-2">
             <div className="flex ">
               <span className="w-[210px]">
                 Received application from (Name)&nbsp;
@@ -908,26 +994,26 @@ export default function CbiForm() {
                 className="text-[16px] w-[250px] border-b outline-none"
               />
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 mt-6">
               <div className="flex">
                 Rs.&nbsp;
                 <input
                   type="text"
-                  className="text-[16px] w-[200px] border-b outline-none"
+                  className="text-[16px] w-[100px] border-b outline-none"
                 />
               </div>
               <div className="flex">
                 on (Date)&nbsp;
                 <input
                   type="text"
-                  className="text-[16px] w-[200px] border-b outline-none"
+                  className="text-[16px] w-[100px] border-b outline-none"
                 />
               </div>
               <div className="flex">
                 at Time&nbsp;
                 <input
                   type="text"
-                  className="text-[16px] w-[142px] border-b outline-none"
+                  className="text-[16px] w-[60px] border-b outline-none"
                 />
               </div>
               <div>for funds transfer under RTGS / NEFT.</div>
