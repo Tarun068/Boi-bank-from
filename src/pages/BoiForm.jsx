@@ -127,7 +127,7 @@ function DigitBoxes({
   length = 16,
   name = "digits",
   box = 22,
-  gap = 6,
+  gap = 4,
   value = "",
   onChange,
   restrict = "alnum",
@@ -658,7 +658,7 @@ export default function BOIFormPixelPerfect() {
       setForm((prev) => ({
         ...prev,
         beneficiaryName: found["Beneficiary name"] || "",
-        accountNumber: (found["Account number"] || "").slice(0, 16),
+        accountNumber: found["Account number"] || "",
         branch: found["Branch Name"] || "",
         center: found["Center"] || "",
         bank: found["Bank"] || "",
@@ -703,7 +703,7 @@ export default function BOIFormPixelPerfect() {
       setForm((prev) => ({
         ...prev,
         beneficiaryName: found["Beneficiary name"] || "",
-        accountNumber: (found["Account number"] || "").slice(0, 16),
+        accountNumber: found["Account number"] || "",
         branch: found["Branch Name"] || "",
         center: found["Center"] || "",
         bank: found["Bank"] || "",
@@ -970,7 +970,7 @@ export default function BOIFormPixelPerfect() {
               <Label w={190}>2. Account No.</Label>
               <div className="flex items-center gap-2 w-full">
                 <DigitBoxes
-                  length={16}
+                  length={21}
                   name="beneficiary_account"
                   restrict="num"
                   value={form.accountNumber}
