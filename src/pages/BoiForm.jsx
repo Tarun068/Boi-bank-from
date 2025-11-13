@@ -389,6 +389,15 @@ const data2 = [
     Bank: "AXIS BANK",
     "IFS Code No": "UTIB0003120",
   },
+  {
+    "Beneficiary name": "Mutneja Krishna Tilakraj",
+    "Account number": "8116594074",
+    "Branch Name": " BHAT",
+    "account type": "savings",
+    Center: "AHMEDABAD",
+    Bank: "INDIAN BANK",
+    "IFS Code No": "IDIB000B191",
+  },
 ];
 
 /* -------- UI bits -------- */
